@@ -20,5 +20,12 @@ class AgeGroupSerializer(serializers.HyperlinkedModelSerializer):
 class ParentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Parent
-        fields = ('name, ')
+        fields = ('user', 'street_address', 'city', 'state', 'zip_code', 'selected_daycare', 'child')
+
+
+class ChildSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Child
+        fields = ('name', 'age')
+
 

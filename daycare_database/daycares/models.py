@@ -27,7 +27,8 @@ class Daycare(models.Model):
 
 
 class Child(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, default=None)
+    age = models.OneToOneField(AgeGroup, on_delete=models.CASCADE, default=None)
 
 
 class Parent(models.Model):
@@ -50,3 +51,5 @@ class DayCareReview(models.Model):
     parent = models.OneToOneField(Parent, primary_key=True,  on_delete=models.CASCADE)
     review_text = models.CharField(max_length=120, default=None)
     review_rating = models.IntegerField(default=0)
+
+
