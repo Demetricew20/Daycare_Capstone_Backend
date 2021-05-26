@@ -8,7 +8,6 @@ class User(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=70)
     is_daycare = models.BooleanField(default=False)
-    daycare_name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.username
