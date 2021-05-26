@@ -17,15 +17,17 @@ class AgeGroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('group_name', )
 
 
-class ParentSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Parent
-        fields = ('user', 'street_address', 'city', 'state', 'zip_code', 'selected_daycare', 'child')
-
-
 class ChildSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = models.Child
-        fields = ('name', 'age')
+        fields = ('name', 'age_group')
+
+
+class ParentSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.Parent
+        fields = ('street_address', 'city', 'state', 'zip_code', 'selected_daycare', 'child')
 
 

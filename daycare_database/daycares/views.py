@@ -18,3 +18,9 @@ class AgeGroupView(viewsets.ModelViewSet):
 class ChildView(viewsets.ModelViewSet):
     queryset = Child.objects.all()
     serializer_class = ChildSerializer
+
+
+class ParentView(viewsets.ModelViewSet):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+

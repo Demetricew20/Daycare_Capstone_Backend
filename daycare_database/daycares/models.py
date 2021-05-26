@@ -28,7 +28,10 @@ class Daycare(models.Model):
 
 class Child(models.Model):
     name = models.CharField(max_length=120, default=None)
-    age = models.OneToOneField(AgeGroup, on_delete=models.CASCADE, default=None)
+    age_group = models.OneToOneField(AgeGroup, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Parent(models.Model):
@@ -38,7 +41,7 @@ class Parent(models.Model):
     state = models.CharField(max_length=50, null=True)
     zip_code = models.CharField(max_length=5, null=True)
     selected_daycare = models.ManyToManyField(Daycare)
-    child = models.ForeignKey(Child, default=None, on_delete=models.CASCADE)
+    child = models.ManyToManyField(Child)
 
 
 class AgeGroupRoles(models.Model):
