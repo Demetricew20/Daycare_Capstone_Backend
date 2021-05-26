@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy, reverse
+from django.contrib.auth.models import Group
 from rest_framework import viewsets
 from django.views import generic
 from .forms import CustomUserForm
