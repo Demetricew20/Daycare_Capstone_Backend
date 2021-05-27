@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import User
+from .models import NewUser
+from django.contrib.auth.admin import UserAdmin
 
 
-admin.site.register(User)
+class UserAdminConfig(UserAdmin):
+
+    ordering = ('user_name', )
+    list_display = ('email', 'first_name', 'is_daycare', 'is_active', 'is_staff')
+
+
+admin.site.register(NewUser, UserAdminConfig)

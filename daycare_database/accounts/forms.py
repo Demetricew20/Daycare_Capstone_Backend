@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import NewUser
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
 
@@ -9,7 +9,7 @@ class CustomUserForm(UserCreationForm):
     is_daycare = forms.BooleanField(label="Check to register daycare", required=False)
 
     class Meta:
-        model = User
+        model = NewUser
         fields = ("username", "password1", "password2", "is_daycare")
 
     def save(self, commit=True):
