@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class AgeGroup(models.Model):
     group_name = models.CharField(max_length=120, default=None)
 
