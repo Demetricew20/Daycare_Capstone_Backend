@@ -153,8 +153,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
-    'USER_NAME_FIELD': 'user_name',
-    'USER_NAME_CLAIM': 'user_name',
 }
 
 AUTH_USER_MODEL = 'accounts.NewUser'
