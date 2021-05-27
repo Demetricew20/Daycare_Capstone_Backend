@@ -4,10 +4,20 @@ from rest_framework_simplejwt import serializers as _serializers
 from django.conf import settings
 
 
-class UserSerializer(serializers.ModelSerializer):
+class RegisterUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = NewUser
-        fields = ('id', 'first_name', 'last_name', 'user_name', 'email', 'password', 'is_daycare')
+        fields = ('user_name','first_name', 'last_name', 'email', 'password', 'is_daycare')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance
 
 
 class MyTokenObtainPairViewSerializer(_serializers.TokenObtainPairSerializer):

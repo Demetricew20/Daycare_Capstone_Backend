@@ -7,7 +7,7 @@ class AgeGroup(models.Model):
 
 
 class Daycare(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey('accounts.NewUser', default=None, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     street_address = models.CharField(max_length=75, null=True)
     city = models.CharField(max_length=50, null=True)
@@ -36,7 +36,7 @@ class Child(models.Model):
 
 
 class Parent(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=None, on_delete=models.CASCADE),
+    user = models.ForeignKey('accounts.NewUser', default=None, on_delete=models.CASCADE),
     street_address = models.CharField(max_length=75, null=True)
     city = models.CharField(max_length=50, null=True)
     state = models.CharField(max_length=50, null=True)
