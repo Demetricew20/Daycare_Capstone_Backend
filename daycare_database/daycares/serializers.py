@@ -28,6 +28,15 @@ class ParentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Parent
-        fields = ('street_address', 'city', 'state', 'zip_code', 'selected_daycare', 'child')
+        fields = ('id', 'street_address', 'city', 'state', 'zip_code', 'selected_daycare', 'child')
+
+
+class DaycareReviewSerializer(serializers.HyperlinkedModelSerializer):
+    #daycare = serializers.HyperlinkedRelatedField(view_name='daycare-detail', queryset=models.Daycare.objects.all())
+    parent = serializers.HyperlinkedRelatedField(view_name='parent-detail', queryset=models.Parent.objects.all())
+
+    class Meta:
+        model = models.DaycareReview
+        fields = ('daycare', 'parent', 'review_text', 'review_rating')
 
 

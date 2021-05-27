@@ -40,19 +40,14 @@ class Parent(models.Model):
     city = models.CharField(max_length=50, null=True)
     state = models.CharField(max_length=50, null=True)
     zip_code = models.CharField(max_length=5, null=True)
-    selected_daycare = models.ManyToManyField(Daycare)
+    selected_daycare = models.ManyToManyField(Daycare, blank=True)
     child = models.ManyToManyField(Child)
 
 
-class AgeGroupRoles(models.Model):
-    group_id = models.ForeignKey(AgeGroup, default=None, on_delete=models.CASCADE)
-    child = models.ForeignKey(Child, default=None, on_delete=models.CASCADE)
-
-
-class DayCareReview(models.Model):
-    daycare = models.OneToOneField(Daycare, on_delete=models.CASCADE)
-    parent = models.OneToOneField(Parent, primary_key=True,  on_delete=models.CASCADE)
-    review_text = models.CharField(max_length=120, default=None)
+class DaycareReview(models.Model):
+    daycare = models.ManyToManyField(Daycare, default=None)
+    parent = models.OneToOneField(Parent, default=None,  on_delete=models.CASCADE)
+    review_text = models.CharField(max_length=120, null=True)
     review_rating = models.IntegerField(default=0)
 
 
