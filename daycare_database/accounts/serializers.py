@@ -1,38 +1,59 @@
-from rest_framework import serializers
+from rest_framework import serializers, validators
 from .models import NewUser
 from rest_framework_simplejwt import serializers as _serializers
 from django.conf import settings
 
 
-class RegisterUserSerializer(serializers.ModelSerializer):
+# class RegisterUserSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = NewUser
+#         fields = ('user_name','first_name', 'last_name', 'email', 'password', 'is_daycare')
+#         extra_kwargs = {'password': {'write_only': True}}
+#
+#     def create(self, validated_data):
+#         password = validated_data.pop('password', None)
+#         instance = self.Meta.model(**validated_data)
+#         if password is not None:
+#             instance.set_password(password)
+#         instance.save()
+#         return instance
+
+class UserSerializers(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[validators.UniqueValidator(queryset=NewUser.objects.all())]
+    )
+    username = serializers.CharField(
+        max_length=32,
+        validators=[validators.UniqueValidator(queryset=NewUser.objects.all())]
+    )
+    password = serializers.CharField(max_length=32, write_only=True)
+    is_daycare = serializers.BooleanField(default=False)
+    first_name = serializers.CharField(max_length=75)
+    last_name = serializers.CharField(max_length=75)
+
+    def create(self, validate_data):
+        user = NewUser.objects.create_user(username=validate_data['username'], email=validate_data['email'],
+                                           password=validate_data['password'], is_daycare=validate_data['is_daycare'],
+                                           first_name=validate_data['first_name'], last_name=validate_data['last_name'])
+        return user
 
     class Meta:
         model = NewUser
-        fields = ('user_name','first_name', 'last_name', 'email', 'password', 'is_daycare')
-        extra_kwargs = {'password': {'write_only': True}}
-
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.set_password(password)
-        instance.save()
-        return instance
+        fields = ('id', 'username', 'email', 'password', 'is_daycare', 'first_name', 'last_name')
 
 
 class MyTokenObtainPairViewSerializer(_serializers.TokenObtainPairSerializer):
 
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data.pop('refresh', None) # remove refresh from the payload
-        data['access'] = str(refresh.access_token)
 
-        # Add extra responses here
-        data['user_name'] = self.user.user_name
-        data['is_daycare'] = self.user.is_daycare
-        data['first_name'] = self.user.first_name
-        data['last_name'] = self.user.last_name
-        return data
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
 
+        token['username'] = user.username
+        token['email'] = user.email
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name
+
+        return token

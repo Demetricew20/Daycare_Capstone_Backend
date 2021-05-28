@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
+NewUser = get_user_model()
 
 
 class AgeGroup(models.Model):
@@ -7,7 +9,7 @@ class AgeGroup(models.Model):
 
 
 class Daycare(models.Model):
-    user = models.ForeignKey('accounts.NewUser', default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(NewUser, default=None, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     street_address = models.CharField(max_length=75, null=True)
     city = models.CharField(max_length=50, null=True)
@@ -36,7 +38,7 @@ class Child(models.Model):
 
 
 class Parent(models.Model):
-    user = models.ForeignKey('accounts.NewUser', default=None, on_delete=models.CASCADE),
+    user = models.ForeignKey(NewUser, default=None, on_delete=models.CASCADE)
     street_address = models.CharField(max_length=75, null=True)
     city = models.CharField(max_length=50, null=True)
     state = models.CharField(max_length=50, null=True)
