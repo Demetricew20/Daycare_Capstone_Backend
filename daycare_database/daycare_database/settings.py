@@ -156,4 +156,4 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 
-AUTH_USER_MODEL = 'accounts.NewUser'
+AUTH_USER_MODEL = 'accounts.User'

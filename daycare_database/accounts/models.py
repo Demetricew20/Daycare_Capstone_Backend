@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, AbstractUser
 
 
-class NewUser(AbstractUser):
+class User(AbstractUser):
     is_daycare = models.BooleanField(default=False)
 
     def __str__(self):

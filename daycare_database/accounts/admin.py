@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import NewUser
+from .models import User
 
 
-admin.site.register(NewUser)
+admin.site.register(User)
 
 

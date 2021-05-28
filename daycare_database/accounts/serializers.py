@@ -1,5 +1,5 @@
 from rest_framework import serializers, validators
-from .models import NewUser
+from .models import User
 from rest_framework_simplejwt import serializers as _serializers
 from django.conf import settings
 
@@ -22,11 +22,11 @@ from django.conf import settings
 class UserSerializers(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[validators.UniqueValidator(queryset=NewUser.objects.all())]
+        validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
     username = serializers.CharField(
         max_length=32,
-        validators=[validators.UniqueValidator(queryset=NewUser.objects.all())]
+        validators=[validators.UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(max_length=32, write_only=True)
     is_daycare = serializers.BooleanField(default=False)
@@ -34,18 +34,23 @@ class UserSerializers(serializers.ModelSerializer):
     last_name = serializers.CharField(max_length=75)
 
     def create(self, validate_data):
-        user = NewUser.objects.create_user(username=validate_data['username'], email=validate_data['email'],
+        user = User.objects.create_user(username=validate_data['username'], email=validate_data['email'],
                                            password=validate_data['password'], is_daycare=validate_data['is_daycare'],
                                            first_name=validate_data['first_name'], last_name=validate_data['last_name'])
         return user
 
     class Meta:
-        model = NewUser
+        model = User
         fields = ('id', 'username', 'email', 'password', 'is_daycare', 'first_name', 'last_name')
 
 
-class MyTokenObtainPairViewSerializer(_serializers.TokenObtainPairSerializer):
+class UserViewSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'is_daycare', 'first_name', 'last_name')
 
+
+class MyTokenObtainPairViewSerializer(_serializers.TokenObtainPairSerializer):
 
     @classmethod
     def get_token(cls, user):
