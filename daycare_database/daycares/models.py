@@ -16,8 +16,17 @@ class Daycare(models.Model):
     zip_code = models.CharField(max_length=5, null=True)
     images = models.ImageField(null=True)
     description = models.CharField(max_length=250)
-    min_cost_estimate = models.CharField(max_length=4)
-    max_cost_estimate = models.CharField(max_length=4)
+    min_cost_infant = models.CharField(max_length=4, null=True)
+    max_cost_infant = models.CharField(max_length=4, null=True)
+    #Youth toddler
+    min_cost_youth_T = models.CharField(max_length=4, null=True)
+    max_cost_youth_T = models.CharField(max_length=4, null=True)
+    #Old toddler
+    min_cost_old_T = models.CharField(max_length=4, null=True)
+    max_cost_old_T = models.CharField(max_length=4, null=True)
+    #Preschooler
+    min_cost_preschool = models.CharField(max_length=4, null=True)
+    max_cost_preschool = models.CharField(max_length=4, null=True)
     teacher_child_ratio = models.CharField(max_length=15)
     availability = models.BooleanField(default=True)
     infant_group = models.BooleanField(default=False)
