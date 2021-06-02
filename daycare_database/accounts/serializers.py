@@ -60,5 +60,6 @@ class MyTokenObtainPairViewSerializer(_serializers.TokenObtainPairSerializer):
         token['email'] = user.email
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
+        token['is_daycare'] = user.is_daycare
 
         return token
