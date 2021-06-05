@@ -10,7 +10,7 @@ class DaycareSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Daycare
         fields = ('id', 'url', 'user', 'name', 'city', 'state', 'zip_code', 'images', 'street_address',
-                  'description', 'min_cost_infant', 'max_cost_infant', 'min_cost_youth_T', 'max_cost_youth_T',
+                  'description', 'avg_rating', 'min_cost_infant', 'max_cost_infant', 'min_cost_youth_T', 'max_cost_youth_T',
                   'min_cost_old_T', 'max_cost_old_T', 'min_cost_preschool', 'max_cost_preschool',
                   'availability', 'infant_group', 'young_toddler_group', 'older_toddler_group',
                   'preschooler_group', 'school_age_group', 'age_groups')
@@ -37,10 +37,9 @@ class ParentSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DaycareReviewSerializer(serializers.HyperlinkedModelSerializer):
-    daycare = serializers.HyperlinkedRelatedField(view_name='daycare-detail', queryset=models.Daycare.objects.all())
-    parent = serializers.HyperlinkedRelatedField(view_name='parent-detail', queryset=models.Parent.objects.all())
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
     
     class Meta:
         model = models.DaycareReview
-        fields = ('daycare', 'parent', 'review_text', 'review_rating')
+        fields = ('user', 'daycare', 'review_text', 'review_rating')
 

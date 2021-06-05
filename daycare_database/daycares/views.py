@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy, reverse
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .serializers import DaycareSerializer, AgeGroupSerializer, ChildSerializer, ParentSerializer, \
     DaycareReviewSerializer
 from .models import Daycare, AgeGroup, Child, Parent, DaycareReview
@@ -23,6 +23,7 @@ class ChildView(viewsets.ModelViewSet):
 class ParentView(viewsets.ModelViewSet):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
+
 
 
 class DaycareReviewView(viewsets.ModelViewSet):

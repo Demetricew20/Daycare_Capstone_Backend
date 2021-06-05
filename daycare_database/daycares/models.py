@@ -16,6 +16,7 @@ class Daycare(models.Model):
     zip_code = models.CharField(max_length=5, null=True)
     images = models.ImageField(null=True, blank=True)
     description = models.CharField(max_length=250)
+    avg_rating = models.IntegerField(default=0)
     min_cost_infant = models.CharField(max_length=4, null=True, blank=True)
     max_cost_infant = models.CharField(max_length=4, null=True, blank=True)
     #Youth toddler
@@ -55,8 +56,8 @@ class Parent(models.Model):
 
 
 class DaycareReview(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     daycare = models.ManyToManyField(Daycare, default=None)
-    parent = models.OneToOneField(Parent, default=None,  on_delete=models.CASCADE)
     review_text = models.CharField(max_length=120, null=True)
     review_rating = models.IntegerField(default=0)
 
